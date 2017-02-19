@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/instantsearch.js/1/instantsearch.min.css" />
+    <title>Plan Comptable Général</title>
+  </head>
+  <body>
+    <div class="container" style="padding-top:4rem">
+      <div class="row">
+      <div class="col-12">
+        <h1>Plan Comptable Général</h1>
+      </div>
+      <div class="col-12">
+        <input id="search-box" class="form-control col-md-6 col-sm-12" type="text">
+      </div>
+      <div class="col-12">
+        <div id="infinite-hits-container"></div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/instantsearch.js/1/instantsearch.min.js"></script>
+    <script>
+  		var search = instantsearch({
+  		  appId: 'W8X8C62BVI',
+  		  apiKey: 'f7ac1c4f7efb07467f2d841542a7dc7f',
+  		  indexName: 'pcg',
+  		  urlSync: true,
+  		  numberLocale: 'fr'
+  		});
+
+  		search.addWidget(
+  		  instantsearch.widgets.searchBox({
+  		    container: '#search-box',
+  		    placeholder: 'Numéro, compte...'
+  		  })
+  		);
+
+      search.addWidget(
+        instantsearch.widgets.infiniteHits({
+          container: '#infinite-hits-container',
+          templates: {
+            empty: 'No results',
+            item: '<strong>{{prefix}}</strong>. {{name}}'
+          },
+          hitsPerPage: 1000
+        })
+      );
+
+  		search.start();
+  	</script>
+  </body>
+</html>
