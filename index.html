@@ -17,7 +17,7 @@
         <input id="search-box" class="form-control col-md-6 col-sm-12" type="text">
       </div>
       <div class="col-12">
-        <div id="infinite-hits-container"></div>
+        <div id="hits-container"></div>
       </div>
     </div>
 
@@ -42,8 +42,8 @@
   		);
 
       search.addWidget(
-        instantsearch.widgets.infiniteHits({
-          container: '#infinite-hits-container',
+        instantsearch.widgets.hits({
+          container: '#hits-container',
           templates: {
             empty: 'No results',
             item: '<strong>{{prefix}}</strong>. {{name}}'
