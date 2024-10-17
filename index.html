@@ -3,45 +3,47 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/instantsearch.js/1/instantsearch.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.min.css" integrity="sha512-xiunq9hpKsIcz42zt0o2vCo34xV0j6Ny8hgEylN3XBglZDtTZ2nwnqF/Z/TTCc18sGdvCjbFInNd++6q3J0N6g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.css@8.5.1/themes/reset-min.css" integrity="sha256-KvFgFCzgqSErAPu6y9gz/AhZAvzK48VJASu3DpNLCEQ=" crossorigin="anonymous">
     <title>Plan Comptable Général</title>
   </head>
   <body>
     <div class="container" style="padding-top:4rem">
       <div class="row">
-      <div class="col-12">
-        <h1>Plan Comptable Général</h1>
+        <div class="column">
+          <h1>Plan Comptable Général</h1>
+        </div>
       </div>
-      <div class="col-12">
-        <input id="search-box" class="form-control col-md-6 col-sm-12" type="text">
+      <div class="row">
+        <div class="column">
+          <input id="searchbox" type="text">
+        </div>
       </div>
-      <div class="col-12">
-        <div id="hits-container"></div>
-      </div>
+      <div class="row">
+        <div class="column">
+          <div id="hits-container"></div>
+        </div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/instantsearch.js/1/instantsearch.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.24.0/dist/algoliasearch-lite.umd.js" integrity="sha256-b2n6oSgG4C1stMT/yc/ChGszs9EY/Mhs6oltEjQbFCQ=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.75.1/dist/instantsearch.production.min.js" integrity="sha256-vCu88BK6WMUBmJHZuJ6B2ivD6+fq5Wv3/dy2F+QiGEQ=" crossorigin="anonymous"></script>
     <script>
-  		var search = instantsearch({
-  		  appId: 'W8X8C62BVI',
-  		  apiKey: 'f7ac1c4f7efb07467f2d841542a7dc7f',
-  		  indexName: 'pcg',
-  		  urlSync: true,
-  		  numberLocale: 'fr'
-  		});
+      const searchClient = algoliasearch('W8X8C62BVI', 'f7ac1c4f7efb07467f2d841542a7dc7f');
 
-  		search.addWidget(
-  		  instantsearch.widgets.searchBox({
-  		    container: '#search-box',
-  		    placeholder: 'Numéro, compte...'
-  		  })
-  		);
+      const search = instantsearch({
+        indexName: 'pcg',
+  		  routing: true,
+  		  numberLocale: 'fr',
+        searchClient
+      });
 
-      search.addWidget(
+      search.addWidgets([
+        instantsearch.widgets.searchBox({
+  		    container: '#searchbox',
+  		    placeholder: 'Numéro, compte...',
+          autofocus: true,
+          showReset: true
+        }),
+
         instantsearch.widgets.hits({
           container: '#hits-container',
           templates: {
@@ -50,9 +52,9 @@
           },
           hitsPerPage: 1000
         })
-      );
+      ]);
 
-  		search.start();
+      search.start();
   	</script>
   </body>
 </html>
