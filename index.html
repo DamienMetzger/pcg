@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.min.css" integrity="sha512-xiunq9hpKsIcz42zt0o2vCo34xV0j6Ny8hgEylN3XBglZDtTZ2nwnqF/Z/TTCc18sGdvCjbFInNd++6q3J0N6g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.css@8.5.1/themes/reset-min.css" integrity="sha256-KvFgFCzgqSErAPu6y9gz/AhZAvzK48VJASu3DpNLCEQ=" crossorigin="anonymous">
+    <style>
+      .ais-SearchBox-submit, .ais-SearchBox-reset {
+        display: none;
+      }
+    </style>
     <title>Plan Comptable Général</title>
   </head>
   <body>
@@ -16,12 +21,12 @@
       </div>
       <div class="row">
         <div class="column">
-          <input id="searchbox" type="text">
+          <div id="searchbox"></div>
         </div>
       </div>
       <div class="row">
         <div class="column">
-          <div id="hits-container"></div>
+          <div id="hits"></div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.24.0/dist/algoliasearch-lite.umd.js" integrity="sha256-b2n6oSgG4C1stMT/yc/ChGszs9EY/Mhs6oltEjQbFCQ=" crossorigin="anonymous"></script>
@@ -31,9 +36,10 @@
 
       const search = instantsearch({
         indexName: 'pcg',
+        searchClient,
   		  routing: true,
   		  numberLocale: 'fr',
-        searchClient
+        showLoadingIndicator: true
       });
 
       search.addWidgets([
@@ -41,16 +47,21 @@
   		    container: '#searchbox',
   		    placeholder: 'Numéro, compte...',
           autofocus: true,
-          showReset: true
+          showReset: false,
+          showSubmit: false,
+          searchAsYouType: true
         }),
 
         instantsearch.widgets.hits({
-          container: '#hits-container',
+          container: '#hits',
           templates: {
             empty: 'No results',
             item: '<strong>{{prefix}}</strong>. {{name}}'
-          },
-          hitsPerPage: 1000
+          }
+        }),
+
+        instantsearch.widgets.configure({
+          hitsPerPage: 1000,
         })
       ]);
 
